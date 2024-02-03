@@ -117,7 +117,47 @@ class Ex13 {
 
   // Q3
 
+  /*
+   * A recursive static method that accepts two character strings 1st and 2st ,
+   * and returns the
+   * The minimal (smallest) string that contains both strings.
+   */
 
+  public static String minimalSt(String st1, String st2) {
+    return minimalSt(st1, st2, 0, 0, "");
+  }
+
+  public static String minimalSt(String st1, String st2, int i, int j, String str) {
+    if (i == st1.length() && j == st2.length()) {
+      return str;
+    }
+
+    if (i < st1.length() && j < st2.length() && st1.charAt(i) == st2.charAt(j)) {
+      return minimalSt(st1, st2, i + 1, j + 1, str + st1.charAt(i));
+    } else {
+      String step1 = "";
+      String step2 = "";
+
+      if (i < st1.length()) {
+        step1 = minimalSt(st1, st2, i + 1, j, str + st1.charAt(i));
+      }
+      if (j < st2.length()) {
+        step2 = minimalSt(st1, st2, i, j + 1, str + st2.charAt(j));
+      }
+
+      if (step1.length() < 1) {
+        return step2;
+      } else if (step2.length() < 1) {
+        return step1;
+      } else {
+        if (step1.length() < step2.length()) {
+          return step1;
+        } else {
+          return step2;
+        }
+      }
+    }
+  }
 
   // Q4
 
@@ -160,8 +200,6 @@ class Ex13 {
     return Math.max(Math.max(down, right), Math.max(up, left));
   }
 
-
-  
   public static void main(String[] args) {
     int[] arr = { -8, 1, -4, 11, 9, -15, 10, 8, -3 };
     maxMul3(arr);
